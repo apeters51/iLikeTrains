@@ -41,22 +41,25 @@ class Bot { // Class to make accessing motors easier
             bl_motor.stop();
           }
         void lineTracking() {
-              if RIGHT_LINE_TRACKER == 1 &amp; LEFT_LINE_TRACKER == 1 {
-                  while RIGHT_LINE_TRACKER == 1 &amp; LEFT_LINE_TRACKER == 1 {
+            right_line_tracker = digitalread(RIGHT_LINE_TRACKER);
+            left_line_tracker = digitalread(LEFT_LINE_TRACKER);
+            
+            if right_line_tracker == 1 &amp; left_line_tracker == 1 {
+                  while right_line_tracker == 1 &amp; left_line_tracker == 1 {
                         bot.moveForward(100);
                   }
             }
-            else if RIGHT_LINE_TRACKER != 1 &amp; LEFT_LINE_TRACKER == 1 {
-                  while RIGHT_LINE_TRACKER != 1 &amp; LEFT_LINE_TRACKER == 1 {
+            else if right_line_tracker != 1 &amp; left_line_tracker == 1 {
+                  while right_line_tracker != 1 &amp; left_line_tracker == 1 {
                         bot.turnLeft(5);
                   }
             }
-            else if RIGHT_LINE_TRACKER == 1 &amp; LEFT_LINE_TRACKER != 1 {
-                  while RIGHT_LINE_TRACKER == 1 &amp; LEFT_LINE_TRACKER != 1 {
+            else if right_line_tracker == 1 &amp; left_line_tracker != 1 {
+                  while right_line_tracker == 1 &amp; left_line_tracker != 1 {
                         bot.turnRight(5);
                   }
             }
-            else if RIGHT_LINE_TRACKER != 1 &amp; LEFT_LINE_TRACKER != 1 {
+            else if right_line_tracker != 1 &amp; left_line_tracker != 1 {
                   bot.allStop();
             }
         }
