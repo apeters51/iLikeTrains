@@ -1,0 +1,54 @@
+// new turning functions
+// will be used to turn UNTIL a certain condition is satisfied
+// instead of entering a degree value
+        void turnLeft() {
+            fr_motor.run(50);
+            br_motor.run(50);
+            fl_motor.run(-1*40);
+            bl_motor.run(-1*40);
+          }
+        void turnRight() {
+            fr_motor.run(40);
+            br_motor.run(40);
+            fl_motor.run(-1*50);
+            bl_motor.run(-1*50);
+          }
+
+// function that returns true if BOTH line sensors are detecting the line and false otherwise
+        bool lineDetected()
+        {
+          right_line_sensor = digitalRead(RIGHT_LINE_TRACKER);
+          left_line_sensor = digitalRead(LEFT_LINE_TRACKER);
+          if (right_line_sensor && left_line_snesor)
+          {
+            return true;
+          }
+          return false;
+        }
+
+// funciton that navigates the robot along the path
+// new turn functions come into play as follows:
+//      as soon as one of the sensors is no longer detecting the line, the robot stops moving forward and turns
+//      continuously until both sensors are detecting the line. Then the function repeats from the loop it is placed within.
+
+        void trackLine()
+        {
+          while (lineDetected)
+          {
+            moveFoward(40);
+          }
+          if (digitalRead(LEFT_LINE_TRACKER) == 1)
+          {
+            while (!lineDetected)
+            {
+              turnRight();
+            }
+          }
+          else if (digitalRead(RIGHT_LINE_TRACKER) == 1)
+          {
+            while (!lineDetected)
+            {
+              turnLeft();
+            }
+          }
+        }
