@@ -1,44 +1,34 @@
 // Obstacle avoidance
 
 // function that returns true if ANY of the IR sensors detect an obstacle (false otherwise)
-        bool obstacle()
+bool obstacle()
+{
+        if (digitalRead(LEFT_IR_SENSOR) == LOW || digitalRead(TOP_IR_SENSOR) == LOW || digitalRead(RIGHT_IR_SENSOR) == LOW) // if any of the sensors detect an obstacle, return true
         {
-          if (LEFT_IR_SENSOR == LOW || TOP_IR_SENSOR == LOW || RIGHT_IR_SENSOR == LOW)
-          {
-            return true;
-          }
-          return false;
+                return true;
         }
+        return false;
+}
 
 
 
 // function that tells the robot to navigate thru extraction zone by turning away from obstacles
-        void avoidObstacles()
+void avoidObstacles()
+{
+        if (digitalRead(LEFT_IR_SENSOR) == LOW)       // yes obstacle detected by left sensor
         {
-          while (!obstacle)
-          {
-            moveForward();
-          }
-          
-          if (LEFT_IR_SENSOR == LOW) // yes obstacle
-          {
-            while (LEFT_IR_SENSOR == LOW) // left sensor still blocked (ADD DIGITAL READS TO EVERYTHING!)
-            {
-              turnRight();
-            }
-          }
-          else if (RIGHT_IR_SENSOR == LOW) // yes obstacle
-          {
-            while (RIGHT_IR_SENSOR == LOW) // left sensor still blocked (ADD DIGITAL READS TO EVERYTHING!)
-            {
-              turnLeft();
-            }
-          }
-          else // only top IR sensor is blocked
-          {
-            while(LEFT_IR_SENSOR == HIGH) // does not see obstacle
-            {
-              turnRight();
-            }
-          }
+                turnRight();
         }
+        else if (digitalRead(RIGHT_IR_SENSOR) == LOW) // yes obstacle detected by right sensor
+        {
+                turnLeft();
+        }
+        else if (digitalRead(LEFT_IR_SENSOR) == HIGH) // yes obstacle detected by top sensor (arbitrary turning right to make it so that left sensor sees obstacle)
+        {
+                turnRight();
+        }
+        else                                          // none of the sensors see obstacles
+        {
+                moveForward();
+        }
+}
